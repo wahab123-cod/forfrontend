@@ -71,7 +71,6 @@
         </div>
       </div>
     </div>
-
     <div
       v-if="isModalVisible"
       class="modal fade show d-block"

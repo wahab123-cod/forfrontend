@@ -18,7 +18,7 @@ export default {
     },
     methods: {
       add() {
-     
+        
         alert("The data is: " + this.text + ", " + this.password);
          console.log("The data is", this.text, this.password);
       },

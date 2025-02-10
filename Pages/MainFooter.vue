@@ -76,7 +76,7 @@ small {
   color: #95a5a6;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .footer-title {
     text-align: center;

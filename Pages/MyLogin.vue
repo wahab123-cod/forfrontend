@@ -20,7 +20,7 @@
               </div>
               
               <p class="mt-3 text-center">
-                Don't have an account? <router-link to="/signup">Sign Up</router-link>
+                Don't have an account? <router-link to="/signup">Sign Up </router-link>
               </p>
             </form>
           </div>
