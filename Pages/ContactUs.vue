@@ -16,7 +16,6 @@ export default {
         password: null,
       };
     },
-  
     methods: {
       add() {
      
