@@ -1,20 +1,27 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div>
+  <NavBar></NavBar>
+<router-view></router-view>
+<MyFooter> </MyFooter>
+</div>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import NavBar from '../Pages/NavBar.vue'
+import MyFooter from '../Pages/MainFooter.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    NavBar,
+    MyFooter
+
   }
 }
 </script>
 
 <style>
+@import '~bootstrap/dist/css/bootstrap.min.css';
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
