@@ -71,39 +71,29 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="isModalVisible"
-      class="modal fade show d-block"
-      tabindex="-2"
-      id="successModal"
-      aria-labelledby="successModalLabel"
-      aria-hidden="false"
-    >
-      <div class="modal-dialog">
+
+ 
+    <div v-if="isModalVisible" class="modal show d-block" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered text-success">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="successModalLabel">
-              Form Submitted Successfully
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              @click="closeModal"
-              aria-label="Close"
-            ></button>
+            <h5 class="modal-title">Registration Successful</h5>
+            <button type="button" class="btn-close" @click="closeModal"></button>
           </div>
           <div class="modal-body">
-            Your form has been successfully submitted! Thank you for
-            registering.
+            <p>Your account has been created successfully!</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeModal">
+            <button type="button" class="btn btn-danger" @click="closeModal">
               Close
             </button>
           </div>
         </div>
       </div>
     </div>
+
+   
+    <div v-if="isModalVisible" class="modal-backdrop fade show"></div>
   </div>
 </template>
 
@@ -136,24 +126,21 @@ export default {
         return;
       }
 
-      this.confirmPasswordError = false;
+     
       this.passwordlengtherror = false;
-
+      this.confirmPasswordError = false;
       this.form.name = "";
       this.form.email = "";
       this.form.password = "";
       this.form.confirmPassword = "";
 
+      
       this.isModalVisible = true;
     },
 
     checkPasswordStrength() {
       const regix = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
-      if (regix.test(this.form.password)) {
-        this.passwordlengtherror = false;
-      } else {
-        this.passwordlengtherror = true;
-      }
+      this.passwordlengtherror = !regix.test(this.form.password);
     },
 
     closeModal() {
@@ -217,28 +204,24 @@ h3 {
   color: #e74c3c;
 }
 
-@media (max-width: 576px) {
-  .card {
-    padding: 20px;
-  }
 
-  h3 {
-    font-size: 1.5rem;
-  }
-
-  .form-control {
-    padding: 15px;
-  }
-
-  .btn-lg {
-    padding: 15px;
-  }
-}
 .modal.show {
   display: block;
+
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
 }
 
 .modal-content {
   border-radius: 10px;
+  background-color:white;
 }
 </style>
