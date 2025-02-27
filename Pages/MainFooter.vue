@@ -37,8 +37,13 @@ export default {
 
 <style scoped>
 footer {
-  background-color: #2c3e50;
+  position: relative;
   width: 100%;
+  background: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  bottom: 0;
 }
 
 .container {

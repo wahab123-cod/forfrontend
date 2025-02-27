@@ -3,16 +3,17 @@
     <div class="row justify-content-center mt-5">
       <div class="col-md-6">
         <div class="card shadow-sm p-4">
+     
           <h3 class="text-center mb-4">Sign Up</h3>
-
+   
           <form @submit.prevent="submitForm">
             <div class="mb-3">
               <label for="name" class="form-label">User Name</label>
               <input
                 type="text"
                 class="form-control"
-                id="name"
-                v-model="form.name"
+                id="Username"
+                v-model="Username"
                 required
               />
             </div>
@@ -22,8 +23,8 @@
               <input
                 type="email"
                 class="form-control"
-                id="email"
-                v-model="form.email"
+                id="Gmail"
+                v-model="Gmail"
                 required
               />
             </div>
@@ -33,8 +34,8 @@
               <input
                 type="password"
                 class="form-control"
-                id="password"
-                v-model="form.password"
+                id="Password"
+                v-model="Password"
                 required
                 @input="checkPasswordStrength"
               />
@@ -42,22 +43,6 @@
                 Please Provide a Strong Password
               </div>
             </div>
-
-            <div class="mb-3">
-              <label for="confirmPassword" class="form-label"
-                >Confirm Password</label
-              >
-              <input
-                type="password"
-                class="form-control"
-                id="confirmPassword"
-                v-model="form.confirmPassword"
-                required
-                :class="{ 'is-invalid': confirmPasswordError }"
-              />
-              <div class="invalid-feedback">Passwords do not match!</div>
-            </div>
-
             <div class="d-grid gap-2">
               <button type="submit" class="btn btn-primary btn-lg">
                 Sign Up
@@ -72,7 +57,7 @@
       </div>
     </div>
 
- 
+    
     <div v-if="isModalVisible" class="modal show d-block" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered text-success">
         <div class="modal-content">
@@ -98,54 +83,54 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
-      form: {
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      },
-      passwordlengtherror: false,
-      confirmPasswordError: false,
-      isModalVisible: false,
+      Username: "",
+      Gmail: " ",
+      Password: "",
+      isModalVisible:false
     };
   },
   methods: {
-    submitForm() {
-      const regix = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+    async submitForm() {
+      try {
+        const userdata = {
+          Username: this.Username,
+          Gmail: this.Gmail,
+          Password: this.Password,
+        };
+        console.log("Sending Data:", userdata);
 
-      if (!regix.test(this.form.password)) {
-        this.passwordlengtherror = true;
-        return;
-      }
-
-      if (this.form.password !== this.form.confirmPassword) {
-        this.confirmPasswordError = true;
-        return;
-      }
-
-     
-      this.passwordlengtherror = false;
-      this.confirmPasswordError = false;
-      this.form.name = "";
-      this.form.email = "";
-      this.form.password = "";
-      this.form.confirmPassword = "";
-
+        const res = await axios.post("http://localhost:3001/register", userdata);
+ 
+        alert("Registration Successful");
+        this.isModalVisible = true;
       
-      this.isModalVisible = true;
-    },
+        console.log("Response Data:", res.data);
+       setTimeout(() => {
+        this.$router.push("/login")
+       }, 2000);
+      
+      } catch (err) {
+        console.log("Error occurred while sending data to DB:", err);
 
-    checkPasswordStrength() {
-      const regix = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
-      this.passwordlengtherror = !regix.test(this.form.password);
+        if (err.response && err.response.data && err.response.data.message) {
+          alert(err.response.data.message);
+        } else {
+          alert("Registration Failed. Please try again.");
+        }
+      }
+      this.Username="",
+      this.Gmail= " ",
+      this.Password=""
     },
-
     closeModal() {
-      this.isModalVisible = false;
-    },
+  this.isModalVisible = false;
+  
+}
+
   },
 };
 </script>
@@ -180,7 +165,7 @@ h3 {
 
 .form-control:focus {
   border-color: #4c8f29;
-  box-shadow: 0 0 0 0.2rem rgba(76, 143, 41, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(76, 143, 41, 0.25) ;
 }
 
 .btn-primary {
