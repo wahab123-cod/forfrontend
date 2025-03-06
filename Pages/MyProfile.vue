@@ -32,7 +32,7 @@ export default {
     return {
       user: null,
       message: "",
-      defaultPic: "https://via.placeholder.com/150",
+    
     };
   },
   methods: {

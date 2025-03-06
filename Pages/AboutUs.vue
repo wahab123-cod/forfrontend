@@ -8,7 +8,7 @@
     <h1>  {{ $store.state.name }}  </h1>
     <button @click="updatename">update name</button>
     
-
+    
     <h2>  For 3rd party api to check   </h2>
     <br>
     <button @click="fetchdata">  Fetch Data    </button>

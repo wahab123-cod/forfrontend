@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-5">
-      <h2 class="text-center text-primary">Update Username</h2>
+      <h2 class="text-center text-primary">Update Username </h2>
       
       <div class="card p-4 shadow">
         <form @submit.prevent="updateUsername">

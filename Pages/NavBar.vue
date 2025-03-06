@@ -8,6 +8,7 @@
         <router-link to="/" class="nav-link">🏠 Home</router-link>
         <router-link to="/aboutus" class="nav-link">📄 About Us</router-link>
         <router-link to="/dashboard" class="nav-link">📊 Dashboard</router-link>
+        <router-link to="/mycontactus" class="nav-link">📊 Contact Us </router-link>
         <router-link to="/signup" class="nav-link">✍️ Sign Up</router-link>
       </div>
 

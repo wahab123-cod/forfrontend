@@ -3,12 +3,10 @@
     <div class="row justify-content-center mt-5">
       <div class="col-md-6">
         <div class="card shadow-sm p-4">
-     
           <h3 class="text-center mb-4">Sign Up</h3>
-   
           <form @submit.prevent="submitForm">
             <div class="mb-3">
-              <label for="name" class="form-label">User Name</label>
+              <label for="Username" class="form-label">User Name</label>
               <input
                 type="text"
                 class="form-control"
@@ -17,9 +15,8 @@
                 required
               />
             </div>
-
             <div class="mb-3">
-              <label for="email" class="form-label">Email Address</label>
+              <label for="Gmail" class="form-label">Email Address</label>
               <input
                 type="email"
                 class="form-control"
@@ -28,20 +25,28 @@
                 required
               />
             </div>
-
             <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
+              <label for="phoneno" class="form-label">Phone Number</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="phoneno"
+                v-model="phoneno"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="Password" class="form-label">Password</label>
               <input
                 type="password"
                 class="form-control"
                 id="Password"
                 v-model="Password"
                 required
-                @input="checkPasswordStrength"
               />
-              <div v-if="passwordlengtherror" class="text-danger">
-                Please Provide a Strong Password
-              </div>
+            </div>
+            <div v-if="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
             </div>
             <div class="d-grid gap-2">
               <button type="submit" class="btn btn-primary btn-lg">
@@ -57,7 +62,7 @@
       </div>
     </div>
 
-    
+    <!-- Success Modal -->
     <div v-if="isModalVisible" class="modal show d-block" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered text-success">
         <div class="modal-content">
@@ -77,20 +82,22 @@
       </div>
     </div>
 
-   
+    <!-- Modal Backdrop -->
     <div v-if="isModalVisible" class="modal-backdrop fade show"></div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import { registerUser } from '../middleware/api.js';
 export default {
   data() {
     return {
-      Username: "",
-      Gmail: " ",
-      Password: "",
-      isModalVisible:false
+      Username: '',
+      Gmail: '',
+      Password: '',
+      phoneno: '',
+      isModalVisible: false,
+      errorMessage: '', // To display error messages
     };
   },
   methods: {
@@ -100,37 +107,45 @@ export default {
           Username: this.Username,
           Gmail: this.Gmail,
           Password: this.Password,
+          phoneno: this.phoneno,
         };
-        console.log("Sending Data:", userdata);
 
-        const res = await axios.post("http://localhost:3001/register", userdata);
- 
-        alert("Registration Successful");
+        const response = await registerUser(userdata);
+        console.log('Response Data:', response.data);
+
+      
         this.isModalVisible = true;
-      
-        console.log("Response Data:", res.data);
-       setTimeout(() => {
-        this.$router.push("/login")
-       }, 2000);
-      
-      } catch (err) {
-        console.log("Error occurred while sending data to DB:", err);
 
-        if (err.response && err.response.data && err.response.data.message) {
-          alert(err.response.data.message);
+     
+        this.Username = '';
+        this.Gmail = '';
+        this.Password = '';
+        this.phoneno = '';
+
+       
+    /*     setTimeout(() => {
+          this.$router.push('/login');
+        }, 2000); */
+      } catch (error) {
+        console.error('Error occurred while sending data to DB:', error);
+
+  
+        if (error.response) {
+         
+          this.errorMessage = error.response.data.message;
+        } else if (error.request) {
+     
+          this.errorMessage = 'No response from the server. Please try again later.';
         } else {
-          alert("Registration Failed. Please try again.");
+          
+          this.errorMessage = 'An unexpected error occurred. Please try again.';
         }
       }
-      this.Username="",
-      this.Gmail= " ",
-      this.Password=""
     },
     closeModal() {
-  this.isModalVisible = false;
-  
-}
-
+      this.isModalVisible = false;
+      this.$router.push('/login');
+    },
   },
 };
 </script>
@@ -147,7 +162,7 @@ export default {
 }
 
 h3 {
-  font-family: "Arial", sans-serif;
+  font-family: 'Arial', sans-serif;
   font-weight: bold;
   color: #4c8f29;
 }
@@ -165,7 +180,7 @@ h3 {
 
 .form-control:focus {
   border-color: #4c8f29;
-  box-shadow: 0 0 0 0.2rem rgba(76, 143, 41, 0.25) ;
+  box-shadow: 0 0 0 0.2rem rgba(76, 143, 41, 0.25);
 }
 
 .btn-primary {
@@ -181,18 +196,8 @@ h3 {
   border-color: #3b6b22;
 }
 
-.is-invalid {
-  border-color: #e74c3c;
-}
-
-.invalid-feedback {
-  color: #e74c3c;
-}
-
-
 .modal.show {
   display: block;
-
 }
 
 .modal-backdrop {
@@ -207,6 +212,6 @@ h3 {
 
 .modal-content {
   border-radius: 10px;
-  background-color:white;
+  background-color: white;
 }
 </style>

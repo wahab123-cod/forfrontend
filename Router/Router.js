@@ -15,11 +15,26 @@ import UpdateUser from "../Pages/Updated data/UpdateUser.vue";
 import ForgetPass from "../Pages/Updated data/ForgetPass.vue";
 import ResetPass from "../Pages/Updated data/ResetPass.vue";
 import ProPic from "../Pages/ProPic.vue";
+import MyAdminLogin from "../Pages/MyAdminLogin.vue";
+import MyContactUs from "../Pages/MyContactUs.vue";
+import See from "../Pages/See.vue";
 
 const routes = [
 {
     path:"/",
     component: MyHome
+},
+{
+    path:"/myadminlogin",
+    component: MyAdminLogin
+},
+{
+    path:"/see",
+    component: See
+},
+{
+    path:"/mycontactus",
+    component: MyContactUs
 },
 {
     path:"/forgetpass",

@@ -11,7 +11,6 @@
     </main>
   </div>
 </template>
-
 <script>
 import MyProfile from "./MyProfile.vue";
 import axios from "axios";
@@ -117,4 +116,5 @@ button:hover {
     margin: 5px;
   }
 }
+
 </style>
